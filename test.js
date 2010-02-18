@@ -17,7 +17,8 @@ YUI({
     filter: 'debug',
     debug: true
 }).use('io-base', 'json', 'base', function(Y) {
-
+    
+    Y.log(Y.config);
     //sys.puts('Inside: ' + sys.inspect(process.memoryUsage()));
     //Logger outputs with sys.puts
     Y.log('This is a test');
@@ -47,5 +48,15 @@ YUI({
         //Y.log(o, 'debug');
     });
     o.test(); //Should fire the one:foo Event.
+
+    
+    Y.io('http:/'+'/yuilibrary.com/gallery/api/popular', {
+        on: {
+            success: function(id, e) {
+                Y.log(arguments, 'debug', 'io');
+            }
+        }
+    });
+    
 });
 
