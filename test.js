@@ -15,15 +15,35 @@ var YUI = require("./lib/node-yui3").YUI;
 //Now use non-DOM related YUI utilities
 YUI({
     filter: 'debug',
-    debug: true
-}).use('io-base', 'json', 'base', function(Y) {
+    debug: true,
+    modules: {
+        'gallery-yql': {
+            fullpath: 'http://yui.yahooapis.com/gallery-2010.01.27-20/build/gallery-yql/gallery-yql-min.js',
+            requires: ['get','event-custom'],
+            optional: [],
+            supersedes: []
+      }
+ 
+    }
+}).use('io-xdr', 'json', 'base', 'gallery-yql', function(Y) {
     
-    Y.log(Y.config);
+    //Y.log(Y.config);
     //sys.puts('Inside: ' + sys.inspect(process.memoryUsage()));
     //Logger outputs with sys.puts
     Y.log('This is a test');
     //Lang is available
     Y.log('Test: ' + Y.Lang.isBoolean(true), 'debug', 'myapp');
+    
+    var q1 = new Y.yql('select * from github.user.info where (id = "davglass")');
+    q1.on('query', function(r) {
+        //Y.log(r, 'debug', 'yql');
+        //Do something here.
+    });
+    q1.on('error', function(r) {
+        //Do something here.
+        //Y.log(r, 'error', 'yql');
+    });
+    Y.log('After YQL', 'info', 'myapp');
 
     //Creating a simple class
     var One = function() {
@@ -48,15 +68,25 @@ YUI({
         //Y.log(o, 'debug');
     });
     o.test(); //Should fire the one:foo Event.
-
     
+    /*
+    Y.on('io:complete', function() {
+        //Y.log(arguments, 'debug', 'io');
+    }, this, ['lorem', 'ipsum']);
+
     Y.io('http:/'+'/yuilibrary.com/gallery/api/popular', {
+        xdr: {
+            use: 'flash',
+        },
+        data: 'foo',
+        timeout: 1000,
         on: {
-            success: function(id, e) {
+            complete: function(id, e) {
                 Y.log(Y.JSON.parse(e), 'debug', 'io');
             }
         }
     });
+    */
     
 });
 
