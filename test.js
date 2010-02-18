@@ -16,6 +16,7 @@ var YUI = require("./lib/node-yui3").YUI;
 YUI({
     filter: 'debug',
     debug: true,
+    //combine: true,
     modules: {
         'gallery-yql': {
             fullpath: 'http://yui.yahooapis.com/gallery-2010.01.27-20/build/gallery-yql/gallery-yql-min.js',
