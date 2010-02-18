@@ -53,7 +53,7 @@ YUI({
     Y.io('http:/'+'/yuilibrary.com/gallery/api/popular', {
         on: {
             success: function(id, e) {
-                Y.log(arguments, 'debug', 'io');
+                Y.log(Y.JSON.parse(e), 'debug', 'io');
             }
         }
     });
